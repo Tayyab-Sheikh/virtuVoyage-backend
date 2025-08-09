@@ -76,3 +76,14 @@ exports.getMyEnrollments = async (req, res) => {
     res.status(500).json({ message: "Error fetching enrolled tours" });
   }
 };
+
+exports.getMyPayments = async (req, res) => {
+  try {
+    const payments = await Payment.find({
+      tourist: req.user.id,
+    }).populate("tour guide tourist");
+    res.status(200).json({ message: "Payments Fetch!", payments });
+  } catch (err) {
+    res.status(500).json({ message: "Error fetching enrolled tours" });
+  }
+};

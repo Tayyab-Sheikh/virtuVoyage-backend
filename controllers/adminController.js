@@ -1,6 +1,7 @@
 const User = require("../models/User");
 const Tour = require("../models/Tour"); // We’ll create this in next step
 const Enrollment = require("../models/Enrollment"); // same
+const Notification = require("../models/notification");
 
 // Get all users (with optional ?role=guide or ?role=tourist)
 exports.getAllUsers = async (req, res) => {
@@ -22,10 +23,19 @@ exports.approveGuide = async (req, res) => {
     }
 
     guide.isApproved = req.body.isApproved;
+
+    const notification = new Notification({
+      guideId: guide._id,
+      message: req.body.isApproved
+        ? `You are approved`
+        : `Your account rejected!`,
+    });
     await guide.save();
+    await notification.save();
 
     res.json({ message: "Guide approved successfully" });
   } catch (err) {
+    console.log(err);
     res.status(500).json({ message: "Error approving guide" });
   }
 };

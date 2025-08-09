@@ -11,7 +11,7 @@ exports.addReview = async (req, res) => {
 
     // Check if tour is complete & tourist was enrolled
     const now = new Date();
-    if (now < tour.endDate)
+    if (tour.status !== "completed")
       return res.status(400).json({ message: "Tour not completed yet" });
 
     const isEnrolled = await Enrollment.findOne({
@@ -92,6 +92,18 @@ exports.getReviewsForTour = async (req, res) => {
       averageRating: avgRating,
       totalReviews: reviews.length,
       reviews,
+    });
+  } catch (err) {
+    res.status(500).json({ message: "Error loading reviews" });
+  }
+};
+
+exports.getTourReviews = async (req, res) => {
+  try {
+    const reviews = await Review.find().populate("tourist tour");
+    res.json({
+      totalReviews: reviews.length || 0,
+      reviews: reviews || [],
     });
   } catch (err) {
     res.status(500).json({ message: "Error loading reviews" });

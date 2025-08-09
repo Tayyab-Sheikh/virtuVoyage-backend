@@ -5,12 +5,15 @@ const {
   updateReview,
   deleteReview,
   getReviewsForTour,
+  getTourReviews,
 } = require("../controllers/reviewController");
 
 const { protect, authorizeRoles } = require("../middleware/authMiddleware");
 
 // Tourist routes
 router.use(protect, authorizeRoles("tourist"));
+
+router.get("/", getTourReviews);
 
 // Add review
 router.post("/:tourId", addReview);

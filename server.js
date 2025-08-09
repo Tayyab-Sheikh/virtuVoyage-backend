@@ -13,6 +13,7 @@ const dashboardRoutes = require("./routes/dashboardRoutes");
 const zoomRoutes = require("./routes/zoomRoutes");
 const reviewRoutes = require("./routes/reviewRoutes");
 const customTourRequestRoutes = require("./routes/customTourRequestRoutes");
+const notificationRoutes = require("./routes/notificationRoutes");
 // const stripeRoutes = require("./routes/stripeRoutes");
 
 dotenv.config();
@@ -30,6 +31,7 @@ app.use("/api/dashboard", dashboardRoutes);
 app.use("/api/zoom", zoomRoutes);
 app.use("/api/reviews", reviewRoutes);
 app.use("/api/custom-tour-requests", customTourRequestRoutes);
+app.use("/api/notifications", notificationRoutes);
 // app.use("/api/stripe", stripeRoutes);
 
 // Connect to MongoDB and start server

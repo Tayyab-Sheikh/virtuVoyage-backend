@@ -11,6 +11,7 @@ exports.createTour = async (req, res) => {
       endDate,
       maxTourists,
       images,
+      status,
     } = req.body;
 
     const tour = new Tour({
@@ -19,6 +20,7 @@ exports.createTour = async (req, res) => {
       price,
       startDate,
       endDate,
+      status,
       maxTourists,
       images,
       guide: req.user.id,
