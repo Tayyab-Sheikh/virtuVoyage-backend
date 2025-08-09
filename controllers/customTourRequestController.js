@@ -168,26 +168,26 @@ const acceptCustomTourRequest = async (req, res) => {
     }
 
     // Create a new tour based on the custom request
-    const tour = new Tour({
-      title: customTourRequest.title,
-      description: customTourRequest.description,
-      price: price,
-      startDate: startDate,
-      endDate: endDate,
-      maxTourists: customTourRequest.maxTourists,
-      guide: req.user.id,
-      zoomJoinLink,
-      zoomHostLink,
-    });
+    // const tour = new Tour({
+    //   title: customTourRequest.title,
+    //   description: customTourRequest.description,
+    //   price: price,
+    //   startDate: startDate,
+    //   endDate: endDate,
+    //   maxTourists: customTourRequest.maxTourists,
+    //   guide: req.user.id,
+    //   zoomJoinLink,
+    //   zoomHostLink,
+    // });
 
-    await tour.save();
+    // await tour.save();
 
     // Update the custom tour request
     customTourRequest.status = "accepted";
     customTourRequest.acceptedBy = req.user.id;
     customTourRequest.acceptedAt = new Date();
     customTourRequest.price = price;
-    customTourRequest.tourId = tour._id;
+    // customTourRequest.tourId = tour._id;
 
     await customTourRequest.save();
 
@@ -196,7 +196,7 @@ const acceptCustomTourRequest = async (req, res) => {
       message: "Custom tour request accepted successfully",
       data: {
         customTourRequest,
-        tour,
+        // tour,
       },
     });
   } catch (error) {

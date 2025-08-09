@@ -8,6 +8,7 @@ const tourSchema = new mongoose.Schema(
     startDate: { type: Date, required: true },
     endDate: { type: Date, required: true },
     maxTourists: { type: Number, required: true },
+    status: { type: String },
     images: [String], // just URLs for now
     guide: {
       type: mongoose.Schema.Types.ObjectId,
