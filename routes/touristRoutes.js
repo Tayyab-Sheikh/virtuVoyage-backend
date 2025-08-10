@@ -9,9 +9,9 @@ const {
 
 const { protect, authorizeRoles } = require("../middleware/authMiddleware");
 
+router.get("/tours", getAvailableTours);
 router.use(protect, authorizeRoles("tourist"));
 
-router.get("/tours", getAvailableTours);
 router.post("/enroll/:tourId", enrollInTour);
 router.get("/my-tours", getMyEnrollments);
 router.get("/my-payments", getMyPayments);

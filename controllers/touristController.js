@@ -1,6 +1,8 @@
 const Tour = require("../models/Tour");
 const Enrollment = require("../models/Enrollment");
 const Payment = require("../models/Payment");
+const { createZoomMeeting } = require("../utils/zoomApi");
+const Notification = require("../models/notification");
 
 // Get available tours (not started yet)
 exports.getAvailableTours = async (req, res) => {
@@ -56,8 +58,28 @@ exports.enrollInTour = async (req, res) => {
     });
 
     await enrollment.save();
+
+    const urls = await createZoomMeeting();
+    console.log({ urls });
+
+    await Tour.findByIdAndUpdate(tour._id, {
+      zoomJoinLink: urls?.join_url,
+      zoomHostLink: urls?.start_url,
+    });
+
+    const guide_notification = new Notification({
+      guideId: guide._id,
+      message: urls?.join_url,
+    });
+    const tourist_notification = new Notification({
+      touristId: req.user.id,
+      message: urls?.join_url,
+    });
+    await guide_notification.save();
+    await tourist_notification.save();
     res.status(201).json({ message: "Successfully enrolled in tour" });
   } catch (err) {
+    console.log(err);
     if (err.code === 11000) {
       return res.status(400).json({ message: "Already enrolled in this tour" });
     }
