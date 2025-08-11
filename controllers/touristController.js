@@ -68,7 +68,7 @@ exports.enrollInTour = async (req, res) => {
     });
 
     const guide_notification = new Notification({
-      guideId: guide._id,
+      guideId: tour.guide,
       message: urls?.join_url,
     });
     const tourist_notification = new Notification({
